@@ -48,6 +48,9 @@ uploadArchives {
             repository(url: "${sonatypeUrl}/ganja-releases/") {
                 authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
+            pom.version = version
+            pom.artifactId = "routing"
+            pom.groupId = "ganja.component"
             pom.project {
                 licenses {
                     license {
