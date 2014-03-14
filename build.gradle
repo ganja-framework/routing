@@ -42,7 +42,34 @@ cobertura {
     coverageFormats = ['xml', 'html']
 }
 
+def loadProperties(String sourceFileName) {
+    def config = new Properties()
+    def propFile = new File(sourceFileName)
+    if (propFile.canRead()) {
+        config.load(new FileInputStream(propFile))
+        for (Map.Entry property in config) {
+            project.ext[property.key] = property.value;
+        }
+    }
+}
+
+loadProperties("${System.getProperty('user.home')}/.gradle/gradle.properties")
+
+if (!hasProperty('sonatypeUsername')) {
+    ext.sonatypeUsername = ''
+}
+if (!hasProperty('sonatypePassword')) {
+    ext.sonatypePassword = ''
+}
+if (!hasProperty('sonatypeUrl')) {
+    ext.sonatypeUrl = ''
+}
+
 uploadArchives {
+
+    group 'build'
+    description = "Does a maven deploy of archives artifacts"
+
     repositories {
         mavenDeployer {
             repository(url: "${sonatypeUrl}/ganja-releases/") {
