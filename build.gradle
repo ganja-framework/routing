@@ -39,21 +39,10 @@ dependencies {
 
 cobertura {
     coverageDirs << file("/build/classes/main")
+    coverageSourceDirs = [ sourceSets.main.groovy.srcDirs ]
     coverageFormats = ['xml', 'html']
+    coverageExcludes = [ '.*example.*' ]
 }
-
-def loadProperties(String sourceFileName) {
-    def config = new Properties()
-    def propFile = new File(sourceFileName)
-    if (propFile.canRead()) {
-        config.load(new FileInputStream(propFile))
-        for (Map.Entry property in config) {
-            project.ext[property.key] = property.value;
-        }
-    }
-}
-
-loadProperties("${System.getProperty('user.home')}/.gradle/gradle.properties")
 
 if (!hasProperty('sonatypeUsername')) {
     ext.sonatypeUsername = ''

@@ -1,5 +1,5 @@
 .gradle/
 .idea/
-Routing.iml
+*.iml
 build/
 out/
