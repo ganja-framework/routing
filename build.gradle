@@ -33,8 +33,17 @@ repositories {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.2.2'
+    compile 'org.codehaus.groovy:groovy-all:2.3.6'
     testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.groovy
+}
+
+artifacts {
+    archives sourcesJar
 }
 
 cobertura {
