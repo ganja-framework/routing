@@ -1,6 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'cobertura'
 apply plugin: 'maven'
+apply plugin: 'idea'
 
 sourceSets {
     main {

@@ -7,7 +7,9 @@ class Matcher {
 
     protected Map<String,Route> routes = [:]
 
-    Map match(String path, String method = 'GET') {
+    Map match(String pattern, String method = 'GET') {
+
+        String path = "/${pattern.replaceAll(/^\/*/,'')}"
 
         for(route in routes.values()) {
 

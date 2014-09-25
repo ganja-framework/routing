@@ -42,6 +42,7 @@ class MatcherSpec extends Specification {
         expect:
         [ controller: 'adminController'] == matcher.match('/admin')
         [ controller: 'pagesController'] == matcher.match('/admin/pages', 'put')
+        [ controller: 'pagesController'] == matcher.match('//admin/pages', 'put')
         [ controller: 'homeController'] == matcher.match('/')
 
         when:
