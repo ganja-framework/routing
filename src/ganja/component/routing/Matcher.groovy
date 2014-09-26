@@ -26,6 +26,6 @@ class Matcher {
             }
         }
 
-        throw new ResourceNotFoundException()
+        throw new ResourceNotFoundException(path: pattern)
     }
 }

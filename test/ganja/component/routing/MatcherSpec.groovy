@@ -60,6 +60,6 @@ class MatcherSpec extends Specification {
         '/post-only'    | 'HEAD' | MethodNotAllowedException | "Method 'HEAD' is not allowed. Allowed methods: [POST]"
         '/admin/pages'  | 'GET'  | MethodNotAllowedException | "Method 'GET' is not allowed. Allowed methods: [PUT]"
         '/admin/pages'  | 'HEAD' | MethodNotAllowedException | "Method 'HEAD' is not allowed. Allowed methods: [PUT]"
-        '/non-existent' | 'GET'  | ResourceNotFoundException | null
+        '/non-existent' | 'GET'  | ResourceNotFoundException | "Route for '/non-existent' not found."
     }
 }
