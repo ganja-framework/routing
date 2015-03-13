@@ -1,12 +1,13 @@
 package ganja.component.routing
 
+import java.util.regex.Pattern
+
 class Route {
 
-    protected String path = '/'
-
-    protected Map options = [:]
-
-    protected List<String> methods = []
+    String path = '/'
+    Map options = [:]
+    List<String> methods = []
+    Pattern pattern
 
     void setPath(String pattern) {
         path = "/${pattern.replaceAll(/^\/*/,'')}" as String
