@@ -9,7 +9,7 @@ class Route {
     protected List<String> methods = []
 
     void setPath(String pattern) {
-        path = "/${pattern.replaceAll(/^\/*/,'')}"
+        path = "/${pattern.replaceAll(/^\/*/,'')}" as String
     }
 
     void setMethods(List<String> values) {
