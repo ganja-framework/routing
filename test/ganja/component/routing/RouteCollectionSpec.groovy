@@ -47,6 +47,10 @@ class RouteCollectionSpec extends Specification {
 
         then:
         collection.values().each { assert it instanceof Route }
+        collection.each { name, route ->
+            assert name instanceof String
+            assert route instanceof Route
+        }
         for(route in collection.values()) { assert route instanceof Route }
     }
 }

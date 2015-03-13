@@ -11,7 +11,10 @@ class Matcher {
 
         String path = "/${pattern.replaceAll(/^\/*/,'')}"
 
-        for(route in collection.values()) {
+        for(entry in collection) {
+
+            def route = entry.value
+            def name = entry.key
 
             if(path == route.path) {
 
@@ -21,7 +24,7 @@ class Matcher {
                 }
                 else {
 
-                    return route.options
+                    return route.options + [ route: name ]
                 }
             }
         }

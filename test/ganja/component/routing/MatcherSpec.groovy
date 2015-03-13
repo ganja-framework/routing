@@ -40,10 +40,10 @@ class MatcherSpec extends Specification {
         matcher.collection.add('route4', new Route(path:'/', options: [ controller: 'homeController'], methods: ['get']))
 
         expect:
-        [ controller: 'adminController'] == matcher.match('/admin')
-        [ controller: 'pagesController'] == matcher.match('/admin/pages', 'put')
-        [ controller: 'pagesController'] == matcher.match('//admin/pages', 'put')
-        [ controller: 'homeController'] == matcher.match('/')
+        [ route: 'route2', controller: 'adminController' ] == matcher.match('/admin')
+        [ route: 'route3', controller: 'pagesController' ] == matcher.match('/admin/pages', 'put')
+        [ route: 'route3', controller: 'pagesController' ] == matcher.match('//admin/pages', 'put')
+        [ route: 'route4', controller: 'homeController' ] == matcher.match('/')
 
         when:
         matcher.match(path, method)
