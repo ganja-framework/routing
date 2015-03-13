@@ -3,6 +3,8 @@ package ganja.component.routing
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import java.util.regex.Pattern
+
 class RouteSpec extends Specification {
 
     void "it is initalizable"() {
@@ -69,5 +71,17 @@ class RouteSpec extends Specification {
         ['PUT', 'POST']         | 'POST'    | true
         ['PUT', 'POST', 'HEAD'] | 'HEAD'    | true
         ['PUT', 'POST', 'HEAD'] | 'GET'     | false
+    }
+
+    void "it can have regular expression pattern"() {
+
+        given:
+        def route = new Route()
+
+        when:
+        route.pattern = ~/\w+/
+
+        then:
+        route.pattern instanceof Pattern
     }
 }

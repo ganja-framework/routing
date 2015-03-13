@@ -2,21 +2,28 @@ package ganja.component.routing
 
 import ganja.component.routing.exception.MethodNotAllowedException
 import ganja.component.routing.exception.ResourceNotFoundException
+import ganja.component.routing.utils.Pattern
+import ganja.component.routing.utils.RouteCompiler
 
 class Matcher {
 
-    protected RouteCollection collection
+    RouteCompiler compiler
+    RouteCollection collection
 
-    Map match(String pattern, String method = 'GET') {
+    Map match(String input, String method = 'GET') {
 
-        String path = "/${pattern.replaceAll(/^\/*/,'')}"
+        String path = "/${input.replaceAll(/^\/*/,'')}"
 
         for(entry in collection) {
 
             def route = entry.value
             def name = entry.key
 
-            if(path == route.path) {
+            if( ! route.pattern) {
+                compiler.compile(route)
+            }
+
+            if(path ==~ route.pattern) {
 
                 if(route.methods && ! route.methods.contains(method.toUpperCase())) {
 
@@ -29,6 +36,6 @@ class Matcher {
             }
         }
 
-        throw new ResourceNotFoundException(path: pattern)
+        throw new ResourceNotFoundException(path: input)
     }
 }
