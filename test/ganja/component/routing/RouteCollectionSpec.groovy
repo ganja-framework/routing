@@ -10,8 +10,8 @@ class RouteCollectionSpec extends Specification {
         def collection = new RouteCollection()
 
         when:
-        collection.add('route1', new Route()) == null
-        collection.add('route2', new Route()) == null
+        collection.add('route1', new Route())
+        collection.add('route2', new Route())
 
         then:
         collection.size() == 2
@@ -25,12 +25,28 @@ class RouteCollectionSpec extends Specification {
         def route2 = new Route(path: '/about')
 
         when:
-        collection.add('route1', route1) == null
-        collection.add('route2', route2) == null
+        collection.add('route1', route1)
+        collection.add('route2', route2)
         collection.setPrefix('/new')
 
         then:
         route1.path == '/new/contact'
         route2.path == '/new/about'
+    }
+
+    void "it can be iterated over"() {
+
+        given:
+        def collection = new RouteCollection()
+        def route1 = new Route(path: '/contact')
+        def route2 = new Route(path: '/about')
+
+        when:
+        collection.add('route1', route1)
+        collection.add('route2', route2)
+
+        then:
+        collection.values().each { assert it instanceof Route }
+        for(route in collection.values()) { assert route instanceof Route }
     }
 }

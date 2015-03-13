@@ -15,29 +15,29 @@ class MatcherSpec extends Specification {
         matcher instanceof Matcher
     }
 
-    void "it has routes"() {
+    void "it has routes in collection"() {
 
         given:
-        def matcher = new Matcher()
+        def matcher = new Matcher(collection: new RouteCollection())
 
         expect:
-        ! matcher.routes
+        ! matcher.collection.size()
 
         when:
-        matcher.routes['route_name'] = new Route()
+        matcher.collection.add('route1', new Route(path: '/contact'))
 
         then:
-        matcher.routes
+        matcher.collection.size()
     }
 
     void "it matches route by path"() {
 
         setup:
-        def matcher = new Matcher()
-        matcher.routes['route1'] = new Route(path:'/post-only', options: [ controller: 'postController'], methods: ['post'])
-        matcher.routes['route2'] = new Route(path:'/admin', options: [ controller: 'adminController'])
-        matcher.routes['route3'] = new Route(path:'/admin/pages', options: [ controller: 'pagesController'], methods: ['put'])
-        matcher.routes['route4'] = new Route(path:'/', options: [ controller: 'homeController'], methods: ['get'])
+        def matcher = new Matcher(collection: new RouteCollection())
+        matcher.collection.add('route1', new Route(path:'/post-only', options: [ controller: 'postController'], methods: ['post']))
+        matcher.collection.add('route2', new Route(path:'/admin', options: [ controller: 'adminController']))
+        matcher.collection.add('route3', new Route(path:'/admin/pages', options: [ controller: 'pagesController'], methods: ['put']))
+        matcher.collection.add('route4', new Route(path:'/', options: [ controller: 'homeController'], methods: ['get']))
 
         expect:
         [ controller: 'adminController'] == matcher.match('/admin')

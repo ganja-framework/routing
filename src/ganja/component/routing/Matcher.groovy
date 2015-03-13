@@ -5,13 +5,13 @@ import ganja.component.routing.exception.ResourceNotFoundException
 
 class Matcher {
 
-    protected Map<String,Route> routes = [:]
+    protected RouteCollection collection
 
     Map match(String pattern, String method = 'GET') {
 
         String path = "/${pattern.replaceAll(/^\/*/,'')}"
 
-        for(route in routes.values()) {
+        for(route in collection.values()) {
 
             if(path == route.path) {
 
