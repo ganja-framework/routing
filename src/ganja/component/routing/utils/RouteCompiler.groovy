@@ -17,32 +17,3 @@ class RouteCompiler {
         route.pattern = java.util.regex.Pattern.compile(regexp)
     }
 }
-
-/*
-
-def path = '/page/{foo}/{id}/{ok}'
-def matcher = path =~ /\{\w+\}/
-//matcher.each { println it[1..-2] }
-
-path = '/foo/some%20var/edit'
-
-def m = path =~ /\/foo\/(?<param>[^\/]++)\/(?<action>[^\/]++)/
-m.find()
-println m.group('param')
-println m.group('action')
-
-prints:
-some%20var
-edit
-
-path = '/foo/some%20var/edit'
-
-def m = path =~ /\/foo\/(?<param>[^\/]++)(?::\/(?<action>[^\/]++))?/
-m.find()
-println m.group('param')
-println m.group('action')
-
-prints:
-some%20var
-null
- */
