@@ -2,6 +2,7 @@ package ganja.component.routing.utils
 
 import ganja.component.routing.Route
 import spock.lang.Specification
+import java.util.regex.PatternSyntaxException
 import spock.lang.Unroll
 
 class RouteCompilerSpec extends Specification {
@@ -71,5 +72,17 @@ class RouteCompilerSpec extends Specification {
 
         then:
         thrown(IllegalArgumentException)
+    }
+
+    void "it throws exception when numeric variable is specified"() {
+
+        given:
+        def subject = new RouteCompiler(pattern: new Pattern())
+
+        when:
+        subject.compile(new Route(path: '/bar/{1234}'))
+
+        then:
+        thrown(PatternSyntaxException)
     }
 }
