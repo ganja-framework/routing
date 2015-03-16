@@ -67,14 +67,14 @@ class MatcherSpec extends Specification {
         '/non-existent' | 'GET'  | ResourceNotFoundException | "Route for '/non-existent' not found."
     }
 
-    @Ignore
+
     void "it matches routes with parameters"() {
 
         setup:
         def matcher = new Matcher(compiler: new RouteCompiler(pattern: new Pattern()), collection: new RouteCollection())
-        matcher.collection.add('foo', new Route(path:'/foo/{bar}/{baz}', options: [ controller: 'some']))
+        matcher.collection.add('foo', new Route(path:'/{bar}', options: [ controller: 'some']))
 
         expect:
-        [ route: 'foo', controller: 'some', bar: 'ok'] == matcher.match('/foo/ok')
+        [ route: 'foo', controller: 'some' ] == matcher.match('/foo')
     }
 }

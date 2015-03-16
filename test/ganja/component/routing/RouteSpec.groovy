@@ -84,4 +84,13 @@ class RouteSpec extends Specification {
         then:
         route.pattern instanceof Pattern
     }
+
+    void "it can have default values"() {
+
+        given:
+        def route = new Route(defaults: [id: 15])
+
+        expect:
+        route.defaults['id'] == 15
+    }
 }

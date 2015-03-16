@@ -2,26 +2,32 @@ package ganja.component.routing.utils
 
 import ganja.component.routing.Route
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class RouteCompilerSpec extends Specification {
 
+    @Unroll("Path: #path")
     void "it can compile route"() {
 
         given:
         def subject = new RouteCompiler(pattern: new Pattern())
+        def route = new Route(path: path, defaults: defaults )
 
         when:
-        subject.compile(input)
+
+        subject.compile(route)
 
         then:
-        input.pattern.pattern() == expected
+        route.pattern.pattern() == expected
 
         where:
-        input                                    | expected
-        new Route(path: '/{foo}')                | '(?<foo>[^/]++)'
-        new Route(path: '/{foo}/{bar}')          | '(?<foo>[^/]++)/(?<bar>[^/]++)'
-//        new Route(path: '/foo/{foo}/{bar}')      | '/foo/(?<foo>[^/]++)/(?<bar>[^/]++)'
-//        new Route(path: '/foo/{foo}/{bar}/edit') | '/foo/(?<foo>[^/]++)/(?<bar>[^/]++)/edit'
+        path                    | defaults          | expected
+        '/{foo}'                | [:]               | '/(?<foo>[^/]+)'
+        '/{foo}/{bar}'          | [:]               | '/(?<foo>[^/]+)/(?<bar>[^/]+)'
+        '/{foo}'                | [foo: 'provided'] | '/(?:/(?<foo>[^/]+))?'
+        '/{foo}/{bar}'          | [bar: 'provided'] | '/(?<foo>[^/]+)/(?:/(?<bar>[^/]+))?'
+        '/foo/{foo}/{barbaz}'   | [:]               | '/foo/(?<foo>[^/]+)/(?<barbaz>[^/]+)'
+//        '/foo/{foo}/{bar}/edit' | [:]               | '/foo/(?<foo>[^/]+)/(?<bar>[^/]+)/edit'
 
         /*
             @todo implement optional groups
@@ -53,5 +59,17 @@ class RouteCompilerSpec extends Specification {
             some%20var
             null
          */
+    }
+
+    void "it throws exception if route contains variable more than once"() {
+
+        given:
+        def subject = new RouteCompiler(pattern: new Pattern())
+
+        when:
+        subject.compile(new Route(path: '/bar/{foo}/show/{foo}'))
+
+        then:
+        thrown(IllegalArgumentException)
     }
 }

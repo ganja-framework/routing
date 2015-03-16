@@ -4,6 +4,6 @@ class Pattern {
 
     def extract(String path) {
 
-        (path =~ /\{\w+\}/).collect({ it[1..-2] })
+        (path =~ /\{\w+\}/).collect({ [ it, it[1..-2] ] })
     }
 }

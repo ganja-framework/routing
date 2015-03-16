@@ -5,6 +5,7 @@ import java.util.regex.Pattern
 class Route {
 
     String path = '/'
+    Map defaults = [:]
     Map options = [:]
     List<String> methods = []
     Pattern pattern
