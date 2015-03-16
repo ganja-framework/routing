@@ -21,13 +21,13 @@ class RouteCompilerSpec extends Specification {
         route.pattern.pattern() == expected
 
         where:
-        path                    | defaults          | expected
-        '/{foo}'                | [:]               | '/(?<foo>[^/]+)'
-        '/{foo}/{bar}'          | [:]               | '/(?<foo>[^/]+)/(?<bar>[^/]+)'
-        '/{foo}'                | [foo: 'provided'] | '/(?:/(?<foo>[^/]+))?'
-        '/{foo}/{bar}'          | [bar: 'provided'] | '/(?<foo>[^/]+)/(?:/(?<bar>[^/]+))?'
-        '/foo/{foo}/{barbaz}'   | [:]               | '/foo/(?<foo>[^/]+)/(?<barbaz>[^/]+)'
-//        '/foo/{foo}/{bar}/edit' | [:]               | '/foo/(?<foo>[^/]+)/(?<bar>[^/]+)/edit'
+        path                                   | defaults          | expected
+        '/{foo}'                               | [:]               | '/(?<foo>[^/]+)'
+        '/{foo}/{bar}'                         | [:]               | '/(?<foo>[^/]+)/(?<bar>[^/]+)'
+        '/{foo}'                               | [foo: 'provided'] | '/(?:/(?<foo>[^/]+))?'
+        '/{foo}/{bar}'                         | [bar: 'provided'] | '/(?<foo>[^/]+)/(?:/(?<bar>[^/]+))?'
+        '/foo/{foo}/{barbaz}'                  | [:]               | '/foo/(?<foo>[^/]+)/(?<barbaz>[^/]+)'
+        '/foo/{foo}/{bar}/edit'                | [:]               | '/foo/(?<foo>[^/]+)/(?<bar>[^/]+)/edit'
 
         /*
             @todo implement optional groups

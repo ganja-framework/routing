@@ -2,7 +2,6 @@ package ganja.component.routing
 
 import ganja.component.routing.exception.MethodNotAllowedException
 import ganja.component.routing.exception.ResourceNotFoundException
-import ganja.component.routing.utils.Pattern
 import ganja.component.routing.utils.RouteCompiler
 
 class Matcher {
