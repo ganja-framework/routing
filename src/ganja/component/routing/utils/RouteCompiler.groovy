@@ -27,14 +27,16 @@ class RouteCompiler {
             position = route.path.indexOf(it[0]) + it[0].size()
 
             if(route.defaults?."${it[1]}") {
+                // make it optional, as it has default value
                 "${prefix}(?:/(?<${it[1]}>[^/]+))?"
             }
             else {
+                // required
                 "${prefix}(?<${it[1]}>[^/]+)"
             }
 
         }).join('')
 
-        route.pattern = java.util.regex.Pattern.compile(regexp + suffix)
+        route.pattern = java.util.regex.Pattern.compile(regexp ? "^${regexp}${suffix}\$" : "^${route.path}\$")
     }
 }

@@ -23,16 +23,14 @@ class RouteCompilerSpec extends Specification {
 
         where:
         path                                   | defaults          | expected
-        '/{foo}'                               | [:]               | '/(?<foo>[^/]+)'
-        '/{foo}/{bar}'                         | [:]               | '/(?<foo>[^/]+)/(?<bar>[^/]+)'
-        '/{foo}'                               | [foo: 'provided'] | '/(?:/(?<foo>[^/]+))?'
-        '/{foo}/{bar}'                         | [bar: 'provided'] | '/(?<foo>[^/]+)/(?:/(?<bar>[^/]+))?'
-        '/foo/{foo}/{barbaz}'                  | [:]               | '/foo/(?<foo>[^/]+)/(?<barbaz>[^/]+)'
-        '/foo/{foo}/{bar}/edit'                | [:]               | '/foo/(?<foo>[^/]+)/(?<bar>[^/]+)/edit'
+        '/{foo}'                               | [:]               | '^/(?<foo>[^/]+)$'
+        '/{foo}/{bar}'                         | [:]               | '^/(?<foo>[^/]+)/(?<bar>[^/]+)$'
+        '/{foo}'                               | [foo: 'provided'] | '^/(?:/(?<foo>[^/]+))?$'
+        '/{foo}/{bar}'                         | [bar: 'provided'] | '^/(?<foo>[^/]+)/(?:/(?<bar>[^/]+))?$'
+        '/foo/{foo}/{barbaz}'                  | [:]               | '^/foo/(?<foo>[^/]+)/(?<barbaz>[^/]+)$'
+        '/foo/{foo}/{bar}/edit'                | [:]               | '^/foo/(?<foo>[^/]+)/(?<bar>[^/]+)/edit$'
 
         /*
-            @todo implement optional groups
-            @todo implement static parts of path
 
             def path = '/page/{foo}/{id}/{ok}'
             def matcher = path =~ /\{\w+\}/

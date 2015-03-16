@@ -30,7 +30,7 @@ class Matcher {
                 }
                 else {
 
-                    return route.options + [ route: name ]
+                    return [ route: name ] + route.defaults
                 }
             }
         }

@@ -4,8 +4,8 @@ import ganja.component.routing.exception.MethodNotAllowedException
 import ganja.component.routing.exception.ResourceNotFoundException
 import ganja.component.routing.utils.Pattern
 import ganja.component.routing.utils.RouteCompiler
-import spock.lang.Ignore
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class MatcherSpec extends Specification {
 
@@ -33,21 +33,20 @@ class MatcherSpec extends Specification {
         matcher.collection.size()
     }
 
-    @Ignore
     void "it matches route by path"() {
 
         setup:
         def matcher = new Matcher(compiler: new RouteCompiler(pattern: new Pattern()), collection: new RouteCollection())
-        matcher.collection.add('route1', new Route(path:'/post-only', options: [ controller: 'postController'], methods: ['post']))
-        matcher.collection.add('route2', new Route(path:'/admin', options: [ controller: 'adminController']))
-        matcher.collection.add('route3', new Route(path:'/admin/pages', options: [ controller: 'pagesController'], methods: ['put']))
-        matcher.collection.add('route4', new Route(path:'/', options: [ controller: 'homeController'], methods: ['get']))
+        matcher.collection.add('route1', new Route(path:'/post-only', methods: ['post']))
+        matcher.collection.add('route2', new Route(path:'/admin'))
+        matcher.collection.add('route3', new Route(path:'/admin/pages', methods: ['put']))
+        matcher.collection.add('route4', new Route(path:'/', methods: ['get']))
 
         expect:
-        [ route: 'route2', controller: 'adminController' ] == matcher.match('/admin')
-        [ route: 'route3', controller: 'pagesController' ] == matcher.match('/admin/pages', 'put')
-        [ route: 'route3', controller: 'pagesController' ] == matcher.match('//admin/pages', 'put')
-        [ route: 'route4', controller: 'homeController' ] == matcher.match('/')
+        [ route: 'route2' ] == matcher.match('/admin')
+        [ route: 'route3' ] == matcher.match('/admin/pages', 'put')
+        [ route: 'route3' ] == matcher.match('//admin/pages', 'put')
+        [ route: 'route4' ] == matcher.match('/')
 
         when:
         matcher.match(path, method)
@@ -68,13 +67,19 @@ class MatcherSpec extends Specification {
     }
 
 
+    @Unroll("Match: #match")
     void "it matches routes with parameters"() {
 
         setup:
         def matcher = new Matcher(compiler: new RouteCompiler(pattern: new Pattern()), collection: new RouteCollection())
-        matcher.collection.add('foo', new Route(path:'/{bar}', options: [ controller: 'some']))
+        matcher.collection.add(route, new Route(path: path, defaults: defaults))
 
         expect:
-        [ route: 'foo', controller: 'some' ] == matcher.match('/foo')
+        result == matcher.match(match)
+
+        where:
+        route | path   | defaults | match  | result
+        'foo' | '/foo' | [:]      | '/foo' | [route: 'foo']
+        'bar' | '/foo' | [bar: 2] | '/foo' | [route: 'bar', bar: 2]
     }
 }

@@ -25,16 +25,14 @@ class PatternSpec extends Specification {
 
         where:
         input                   | pattern
-        '/foo'                  | '/(?<foo>[^/]+)'
-        '/bar'                  | '/(?<foo>[^/]+)'
-        '/1345'                 | '/(?<foo>[^/]+)'
-        '/foo'                  | '/(?<foo>[^/]+)(?:/(?<bar>[^/]+))?'
-        '/foo/bar'              | '/(?<foo>[^/]+)(?:/(?<bar>[^/]+))?'
-        '/foo?id=78cad'         | '/(?<foo>[^/]+)(?:/(?<bar>[^/]+))?'
-        '/foo/?id=78cad'        | '/(?<foo>[^/]+)(?:/(?<bar>[^/]+))?'
-        '/foo/bar?id=14'        | '/(?<foo>[^/]+)(?:/(?<bar>[^/]+))?'
-        '/admin/pages/134'      | '/admin/pages/(?<foo>[^/]+)'
-        '/admin/pages/134/edit' | '/admin/pages/(?<foo>[^/]+)(?:/(?<bar>[^/]+))?'
-        '/cms/pages/134/edit'   | '/(?<module>[^/]+)/pages/(?<pageId>[^/]+)/(?<action>[^/]+)'
+        '/foo'                  | '^/(?<foo>[^/]+)$'
+        '/bar'                  | '^/(?<foo>[^/]+)$'
+        '/1345'                 | '^/(?<foo>[^/]+)$'
+        '/foo'                  | '^/(?<foo>[^/]+)(?:/(?<bar>[^/]+))?$'
+        '/foo/bar'              | '^/(?<foo>[^/]+)(?:/(?<bar>[^/]+))?$'
+        '/admin/pages/134'      | '^/admin/pages/(?<foo>[^/]+)$'
+        '/admin/pages/134/edit' | '^/admin/pages/(?<foo>[^/]+)(?:/(?<bar>[^/]+))?$'
+        '/cms/pages/134/edit'   | '^/(?<module>[^/]+)/pages/(?<pageId>[^/]+)/(?<action>[^/]+)$'
+        '/foo/231'              | '^/foo/(?<pageId>[^/]+)$'
     }
 }
