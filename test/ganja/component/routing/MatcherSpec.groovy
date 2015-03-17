@@ -78,8 +78,11 @@ class MatcherSpec extends Specification {
         result == matcher.match(match)
 
         where:
-        route | path   | defaults | match  | result
-        'foo' | '/foo' | [:]      | '/foo' | [route: 'foo']
-        'bar' | '/foo' | [bar: 2] | '/foo' | [route: 'bar', bar: 2]
+        route | path                       | defaults   | match            | result
+        'foo' | '/foo'                     | [:]        | '/foo'           | [route: 'foo']
+        'bar' | '/foo'                     | [bar: '2'] | '/foo'           | [route: 'bar', bar: '2']
+        'bar' | '/foo/{bar}'               | [:]        | '/foo/14'        | [route: 'bar', bar: '14']
+        'bar' | '/foo/{bar}/{baz}'         | [:]        | '/foo/14/ok'     | [route: 'bar', baz: 'ok', bar: '14']
+        'bar' | '/admin/{userId}/{action}' | [:]        | '/admin/34/edit' | [route: 'bar', action: 'edit', userId: '34']
     }
 }

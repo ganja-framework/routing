@@ -22,7 +22,11 @@ class Matcher {
                 compiler.compile(route)
             }
 
-            if(path ==~ route.pattern) {
+            def matcher = (path =~ route.pattern)
+
+            if(matcher.matches()) {
+
+                Map params = [:]
 
                 if(route.methods && ! route.methods.contains(method.toUpperCase())) {
 
@@ -30,7 +34,12 @@ class Matcher {
                 }
                 else {
 
-                    return [ route: name ] + route.defaults
+                    route.pattern.namedGroups().each({
+
+                        params.put(it.key, matcher.group(it.value))
+                    })
+
+                    return [ route: name ] + route.defaults + params
                 }
             }
         }
