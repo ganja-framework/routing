@@ -31,10 +31,14 @@ version = "0.1.${System.env.BUILD_NUMBER}"
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://nixilla.net/nexus/content/groups/public/"
+    }
 }
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.1'
+    compile 'ganja:common:0.1.1'
     testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 }
 

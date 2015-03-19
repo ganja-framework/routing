@@ -1,7 +1,7 @@
 package ganja.component.routing
 
-import ganja.component.routing.exception.MethodNotAllowedException
-import ganja.component.routing.exception.ResourceNotFoundException
+import ganja.common.http.exception.MethodNotAllowedException
+import ganja.common.http.exception.NotFoundException
 import ganja.component.routing.utils.Pattern
 import ganja.component.routing.utils.RouteCompiler
 import spock.lang.Specification
@@ -63,7 +63,7 @@ class MatcherSpec extends Specification {
         '/post-only'    | 'HEAD' | MethodNotAllowedException | "Method 'HEAD' is not allowed. Allowed methods: [POST]"
         '/admin/pages'  | 'GET'  | MethodNotAllowedException | "Method 'GET' is not allowed. Allowed methods: [PUT]"
         '/admin/pages'  | 'HEAD' | MethodNotAllowedException | "Method 'HEAD' is not allowed. Allowed methods: [PUT]"
-        '/non-existent' | 'GET'  | ResourceNotFoundException | "Route for '/non-existent' not found."
+        '/non-existent' | 'GET'  | NotFoundException         | "Route for path: '/non-existent' not found"
     }
 
 

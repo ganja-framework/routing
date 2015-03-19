@@ -1,7 +1,7 @@
 package ganja.component.routing
 
-import ganja.component.routing.exception.MethodNotAllowedException
-import ganja.component.routing.exception.ResourceNotFoundException
+import ganja.common.http.exception.MethodNotAllowedException
+import ganja.common.http.exception.NotFoundException
 import ganja.component.routing.utils.RouteCompiler
 
 class Matcher {
@@ -30,7 +30,7 @@ class Matcher {
 
                 if(route.methods && ! route.methods.contains(method.toUpperCase())) {
 
-                    throw new MethodNotAllowedException(method: method, allowed: route.methods)
+                    throw new MethodNotAllowedException("Method '${method}' is not allowed. Allowed methods: ${route.methods}")
                 }
                 else {
 
@@ -44,6 +44,6 @@ class Matcher {
             }
         }
 
-        throw new ResourceNotFoundException(path: input)
+        throw new NotFoundException("Route for path: '${path}' not found")
     }
 }
